@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sms/sms.dart';
+import 'package:unread_reader_flutter/common/drawer_widget.dart';
 import 'package:unread_reader_flutter/constants.dart';
 import 'package:unread_reader_flutter/pages/message.dart';
+import 'package:unread_reader_flutter/services/modal.dart';
 import 'package:unread_reader_flutter/services/sms_helper.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,13 +29,26 @@ class HomePageState extends State<HomePage>
   }
 
   void loadPage() async {
-    threads = await query.getAllThreads;
+    try {
+      threads = await query.getAllThreads;
 
-    setState(
-      () {
-        _isLoading = false;
-      },
-    );
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
+    } catch (e) {
+      print(e.toString());
+      Modal.showInSnackBar(
+        _scaffoldKey,
+        e.toString(),
+      );
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
+    }
   }
 
   Future<void> _refresh() async {
@@ -45,6 +60,7 @@ class HomePageState extends State<HomePage>
     return Scaffold(
         key: _scaffoldKey,
         appBar: _buildAppBar(),
+        drawer: DrawerWidget(),
         body: _isLoading
             ? Center(
                 child: CircularProgressIndicator(),

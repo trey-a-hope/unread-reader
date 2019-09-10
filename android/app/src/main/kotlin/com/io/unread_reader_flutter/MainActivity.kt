@@ -1,4 +1,4 @@
-package com.example.unread_reader_flutter
+package com.io.unread_reader_flutter
 
 import android.os.Bundle
 
