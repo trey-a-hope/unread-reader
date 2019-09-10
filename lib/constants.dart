@@ -1,0 +1,1 @@
+const int MESSAGES_LIMIT = 25;
