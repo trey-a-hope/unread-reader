@@ -34,6 +34,17 @@ samples, guidance on mobile development, and a full API reference.
 - sudo firebase init
 - sudo firebase deploy
 
+# Create Angular App
+npm install -g @angular/cli
+ng new web
+cd web
+<!-- sudo ng serve --open -->
+- sudo ng build --prod
+# (1 time configuration)
+- sudo firebase init
+- "(public directory) dist/web" 
+- "(dist/web/index.html already exists, overwrite?) NO"
+
 ## Beautify Flutter Code
 - Command [shift + option + f]
 
