@@ -27,7 +27,12 @@ samples, guidance on mobile development, and a full API reference.
 - Command [flutter clean]
 - Command [flutter build ios --release]
 - Then go to PRODUCT -> ARCHIVE in XCODE
-- Select VERSION OR PLATFORM to current version, (2.2.2.)
+
+# Create Web App
+- sudo mkdir web (in root directory)
+- cd web
+- sudo firebase init
+- sudo firebase deploy
 
 ## Beautify Flutter Code
 - Command [shift + option + f]
