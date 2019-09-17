@@ -44,6 +44,7 @@ cd web
 - sudo firebase init
 - "(public directory) dist/web" 
 - "(dist/web/index.html already exists, overwrite?) NO"
+sudo ng generate component widgets/footer
 
 ## Beautify Flutter Code
 - Command [shift + option + f]
