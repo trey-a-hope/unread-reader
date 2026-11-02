@@ -1,95 +1,51 @@
-# UnreadReader.Flutter
+# Unread Reader
 
-Mobile application for reading unread messages and leaving them unread.
+An Android app, built with Flutter, that lists your SMS conversations and lets you read them in a chat view, with unread messages highlighted in color. It reads straight from the phone's SMS store, so you can see what's in a thread at a glance. The repo also holds the app's support website, an Angular site hosted on Firebase.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Thread list**: every SMS conversation with the contact's photo and name and how many unread messages it has, with pull-to-refresh (`lib/pages/home.dart`).
+- **Conversation view**: the messages in a thread as chat bubbles, with unread ones in color. Each thread loads at most 25 messages (`MESSAGES_LIMIT` in `lib/constants.dart`) to keep loading fast (`lib/pages/message.dart`).
+- **Support site** in `web/`: home, support and privacy policy pages.
 
-A few resources to get you started if this is your first Flutter project:
+## How it works
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+The app uses the `sms` plugin's `SmsQuery` to load all threads and their contacts from the device, which needs the `READ_SMS` permission declared in `android/app/src/main/AndroidManifest.xml`. Because it relies on Android's SMS provider, it only works on Android.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```
+lib/
+├── main.dart
+├── constants.dart          # MESSAGES_LIMIT
+├── pages/                  # home (thread list), message (conversation)
+├── services/               # SMS helpers, modals, package info
+├── models/chat_message.dart
+└── common/drawer_widget.dart
+web/                        # Angular 8 support site + Firebase hosting config and functions
+```
 
-## Create keystore file.
-- Command [keytool -genkey -v -keystore ~/key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key]
+## Tech stack
 
-## Build Android APK
-- Command [flutter clean]
-- Command [flutter build apk --release]
-- Located [build/app/outputs/apk/release/app-release.apk]
+- Flutter, Dart SDK `>=2.1.0 <3.0.0` (pre-null-safety)
+- `sms` for reading threads and contacts, `cached_network_image`, `package_info`, `device_info`
+- Support site: Angular 8 with Firebase Hosting and Cloud Functions
 
-## Build iOS IPA
-- Command [flutter clean]
-- Command [flutter build ios --release]
-- Then go to PRODUCT -> ARCHIVE in XCODE
+## Getting started
 
-# Create Web App
-- sudo mkdir web (in root directory)
-- cd web
-- sudo firebase init
-- sudo firebase deploy
+### App
 
-# Create Angular App
-npm install -g @angular/cli
-ng new web
+Use a Flutter SDK that supports Dart 2.x (the `sms` plugin and this project predate null safety), then run on an Android device or emulator with SMS data:
+
+```sh
+flutter pub get
+flutter run
+```
+
+Grant the SMS permission when asked.
+
+### Support site
+
+```sh
 cd web
-<!-- sudo ng serve --open -->
-- sudo ng build --prod
-# (1 time configuration)
-- sudo firebase init
-- "(public directory) dist/web" 
-- "(dist/web/index.html already exists, overwrite?) NO"
-sudo ng generate component widgets/footer
-
-## Beautify Flutter Code
-- Command [shift + option + f]
-
-## Splash Screen
-- mipmap-xxxhdpi in the Android folder when using App Icon tends to work best for both platforms.
-
-## iPhone Dimensions
-iPhone 3+4 (3.5 Inch)
-    640 x 960
-iPhone 5, iPhone 5S, iPhone 5C (4 Inch)
-    640 x 1136
-iPhone 6, iPhone 6S, iPhone 7, iPhone 8 (4.7 Inch)
-    750 x 1334
-iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus, iPhone 8 Plus (5.5 Inch)
-    1242 x 2208
-iPhone X (5.8 Inch)
-    1125 x 2436
-iPhone XS (5.8 Inch)
-    1125 x 2436
-iPhone XS Max, iPhone XR (6.5 Inch)
-    1242 x 2688
-iPad Mini 2, iPad Mini 3, iPad Mini 4 (7.9 Inch)
-    1536 x 2048
-iPad 3, iPad 4, iPad Pro, iPad Air, iPad Air 2 (9.7 Inch)
-    1536 x 2048
-iPad Pro (10.5 Inch)
-    1668 x 2224
-iPad Pro (12.9 Inch)
-    2048 x 2732
-Apple Watch Series 1, Apple Watch Series 2, Apple Watch Series 3 - 38mm (1.5 Inch)
-    272 x 340
-Apple Watch Series 4 - 40mm (1.57 Inch)
-    394 x 324
-Apple Watch Series 1, Apple Watch Series 2, Apple Watch Series 3 - 42mm (1.65 Inch)
-    312 x 390
-Apple Watch Series 4 - 44mm (1.78 Inch)
-    448 x 368
-
-## How to Add Local Project to Bit Bucket
-git init
-git remote add origin [my-repo]
-git fetch
-git checkout origin/master -ft
-
-## Remove file.
-rm -rf stripe_functions.js
-
+npm install
+npx ng serve      # http://localhost:4200
+```
